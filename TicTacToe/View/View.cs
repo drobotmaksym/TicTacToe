@@ -9,9 +9,7 @@ public abstract class View : IRenderable, IClickListener
     
     public IEnumerable<View> Children => _children;
     
-    public Position Position { get; set; }
-    
-    public Dimension Dimension { get; set; }
+    public Rectangle Rectangle { get; set; }
 
     public abstract void OnKeyPress(KeyPressEvent keyPressEvent);
 
