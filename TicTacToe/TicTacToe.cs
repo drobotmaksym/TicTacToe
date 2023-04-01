@@ -15,7 +15,7 @@ public sealed class TicTacToe
     public static void Main(string[] args)
     {
         Board board = new(3);
-        BoardView boardView = new(board);
-        boardView.RenderAndDelegateToChildren();
+        BoardObservableView boardObservableView = new(board);
+        boardObservableView.RenderAndDelegateToChildren();
     }
 }

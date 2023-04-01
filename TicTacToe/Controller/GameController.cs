@@ -6,15 +6,15 @@ using TicTacToe.View;
 
 namespace TicTacToe.Controller;
 
-public class GameController : IInputObserver<BoardView>
+public class GameController : IInputObserver<BoardObservableView>
 {
     private Game _game;
     private BoardEvaluator _boardEvaluator;
     private Dash _dash;
     
-    public void HandleKeyPress(BoardView boardView, KeyPressEvent keyPressEvent)
+    public void HandleKeyPress(BoardObservableView boardObservableView, KeyPressEvent keyPressEvent)
     {
-        Evaluation evaluation = _boardEvaluator.EvaluateAndGenerateDashInfo(boardView.Model);
+        Evaluation evaluation = _boardEvaluator.EvaluateAndGenerateDashInfo(boardObservableView.Model);
         HandleGameState(evaluation.GameState, evaluation.DashInfo); // Smells bad.
     }
 

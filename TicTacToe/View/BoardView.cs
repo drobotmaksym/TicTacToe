@@ -2,13 +2,13 @@
 
 namespace TicTacToe.View;
 
-public class BoardView : View<Board>
+public class BoardObservableView : ObservableView<Board>
 {
-    public BoardView(Board model) : base(model)
+    public BoardObservableView(Board model) : base(model)
     {
         for (int i = 0; i < model.Area; i++)
         {
-            AddChild(new BoxView(model.GetBoxByIndex(i)));
+            AddChild(new BoxObservableView(model.GetBoxByIndex(i)));
         }
     }
 

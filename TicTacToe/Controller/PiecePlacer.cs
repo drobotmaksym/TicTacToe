@@ -4,14 +4,14 @@ using TicTacToe.View;
 
 namespace TicTacToe.Controller;
 
-public class PiecePlacer : IInputObserver<BoxView>
+public class PiecePlacer : IInputObserver<BoxObservableView>
 {
     private Game _game;
     
-    public void HandleKeyPress(BoxView boxView, KeyPressEvent keyPressEvent)
+    public void HandleKeyPress(BoxObservableView boxObservableView, KeyPressEvent keyPressEvent)
     {
         if (keyPressEvent.KeyInfo.Key != ConsoleKey.Enter) return;
         if (_game.GameState == GameState.Stopped) return;
-        boxView.Model.Piece = _game.CurrentPlayer.Piece;
+        boxObservableView.Model.Piece = _game.CurrentPlayer.Piece;
     }
 }
