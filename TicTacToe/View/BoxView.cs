@@ -2,9 +2,9 @@
 
 namespace TicTacToe.View;
 
-public class BoxObservableView : ObservableView<Box>
+public class BoxView : ObservableView<Box>
 {
-    public BoxObservableView(Box model) : base(model) { }
+    public BoxView(Box model) : base(model) { }
 
     public override void Render()
     {

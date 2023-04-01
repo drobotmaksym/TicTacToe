@@ -1,4 +1,6 @@
-﻿using TicTacToe.Model.Board;
+﻿using TicTacToe.Model;
+using TicTacToe.Model.Board;
+using TicTacToe.Model.Event;
 using TicTacToe.View;
 
 namespace TicTacToe;
@@ -15,7 +17,7 @@ public sealed class TicTacToe
     public static void Main(string[] args)
     {
         Board board = new(3);
-        BoardObservableView boardObservableView = new(board);
-        boardObservableView.RenderAndDelegateToChildren();
+        BoardView boardView = new(board);
+        boardView.RenderAndDelegateToChildren();
     }
 }

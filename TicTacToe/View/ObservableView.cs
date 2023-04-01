@@ -31,7 +31,7 @@ public abstract class ObservableView<T> : View, IInputObservable<T>
 
         return null;
     }
-    
+
     public override void OnKeyPress(KeyPressEvent keyPressEvent)
     {
         View? childDelegate = GetChildDelegateIfAny(keyPressEvent.Position);
@@ -46,7 +46,7 @@ public abstract class ObservableView<T> : View, IInputObservable<T>
     }
     
     public abstract override void Render();
-
+    
     public void Subscribe(IInputObserver<T> inputObserver)
     {
         _observers.Add(inputObserver);
