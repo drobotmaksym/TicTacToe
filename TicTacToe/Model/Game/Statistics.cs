@@ -6,7 +6,7 @@ public class Statistics
     
     public int Ties { get; private set; }
 
-    public Statistics(Player[] players)
+    public Statistics(IEnumerable<Player> players)
     {
         foreach (Player player in players)
         {
@@ -33,5 +33,11 @@ public class Statistics
     public void IncreaseTies()
     {
         Ties++;
+    }
+
+    public int GetNumberOfWinsFor(Player player)
+    {
+        _playerStatistics.TryGetValue(player, out int wins);
+        return wins;
     }
 }
