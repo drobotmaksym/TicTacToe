@@ -1,4 +1,6 @@
 ﻿using TicTacToe.Model.Board;
+using TicTacToe.Model.Dash;
+using TicTacToe.Model.Evaluation;
 using TicTacToe.View;
 
 namespace TicTacToe;
@@ -14,8 +16,6 @@ public sealed class TicTacToe
     
     public static void Main(string[] args)
     {
-        Board board = new(3);
-        BoardView boardView = new(board);
-        boardView.RenderAndDelegateToChildren();
+
     }
 }

@@ -29,4 +29,6 @@ public class Board
     {
         return _boxes[index];
     }
+
+    public Box this[int column, int row] => _boxes[column + row * Size];
 }

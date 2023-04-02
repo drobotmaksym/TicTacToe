@@ -1,5 +1,4 @@
-﻿using TicTacToe.Model.Dash;
-using TicTacToe.Model.Game;
+﻿using TicTacToe.Model.Game;
 
 namespace TicTacToe.Model.Evaluation;
 
@@ -7,11 +6,11 @@ public class Evaluation
 {
     public GameState GameState { get; }
     
-    public DashInfo? DashInfo { get; }
+    public Dash.Dash? Dash { get; }
 
-    public Evaluation(GameState gameState, DashInfo? dashInfo = null)
+    public Evaluation(GameState gameState, Dash.Dash? dash = null)
     {
         GameState = gameState;
-        DashInfo = dashInfo;
+        Dash = dash;
     }
 }

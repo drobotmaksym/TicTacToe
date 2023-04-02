@@ -2,7 +2,15 @@
 
 public class Dash
 {
-    public int Length { get; }
+    private readonly Position[] _positions;
     
-    public DashInfo DashInfo { get; set; }
+    public Orientation Orientation { get; }
+
+    public IEnumerable<Position> Positions => _positions;
+
+    public Dash(Orientation orientation, Position[] positions)
+    {
+        Orientation = orientation;
+        _positions = positions;
+    }
 }
