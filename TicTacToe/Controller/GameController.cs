@@ -12,7 +12,7 @@ public class GameController : IInputObserver<BoardView>
     private BoardEvaluator _boardEvaluator;
     private Dash _dash;
     
-    public void HandleKeyPress(BoardView boardView, KeyPressEvent keyPressEvent)
+    public void OnKeyPress(BoardView boardView, KeyPressEvent keyPressEvent)
     {
         Evaluation evaluation = _boardEvaluator.EvaluateAndGenerateDashInfo(boardView.Model);
         HandleGameState(evaluation.GameState, evaluation.DashInfo); // Smells bad.

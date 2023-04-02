@@ -3,34 +3,20 @@ using TicTacToe.Model.Event;
 
 namespace TicTacToe.View;
 
-public abstract class View : IRenderable, IClickListener
+public abstract class View : IRenderable, IKeyListener
 {
-    private readonly List<View> _children = new();
-    
-    public IEnumerable<View> Children => _children;
-    
-    public Rectangle Rectangle { get; set; }
+    // Potentially unsafe
+    protected List<View> Children = new();
 
-    public abstract void OnKeyPress(KeyPressEvent keyPressEvent);
-
+    public Rectangle Rectangle;
+    
     public abstract void Render();
-
+    
+    public abstract void PressKey(KeyPressEvent keyPressEvent);
+    
     public void RenderAndDelegateToChildren()
     {
         Render();
-        foreach (View child in _children)
-        {
-            child.RenderAndDelegateToChildren();
-        }
-    }
-
-    public void AddChild(View view)
-    {
-        _children.Add(view);
-    }
-
-    public void RemoveChild(View view)
-    {
-        _children.Remove(view);
+        Children.ForEach(childView => childView.RenderAndDelegateToChildren());
     }
 }

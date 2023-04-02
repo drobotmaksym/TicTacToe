@@ -8,10 +8,10 @@ public class PiecePlacer : IInputObserver<BoxView>
 {
     private Game _game;
     
-    public void HandleKeyPress(BoxView boxObservableView, KeyPressEvent keyPressEvent)
+    public void OnKeyPress(BoxView boxView, KeyPressEvent keyPressEvent)
     {
         if (keyPressEvent.KeyInfo.Key != ConsoleKey.Enter) return;
         if (_game.GameState == GameState.Stopped) return;
-        boxObservableView.Model.Piece = _game.CurrentPlayer.Piece;
+        boxView.Model.Piece = _game.CurrentPlayer.Piece;
     }
 }

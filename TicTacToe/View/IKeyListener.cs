@@ -2,7 +2,7 @@
 
 namespace TicTacToe.View;
 
-public interface IClickListener
+public interface IKeyListener
 {
-    void OnKeyPress(KeyPressEvent keyPressEvent);
+    void PressKey(KeyPressEvent keyPressEvent);
 }

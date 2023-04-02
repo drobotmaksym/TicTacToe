@@ -18,6 +18,6 @@ public class InputHandler
         ConsoleKeyInfo keyInfo = Console.ReadKey();
         Position position = new(Console.CursorLeft, Console.CursorTop);
         KeyPressEvent keyPressEvent = new(keyInfo, position);
-        _primaryView.OnKeyPress(keyPressEvent);
+        _primaryView.PressKey(keyPressEvent);
     }
 }

@@ -19,4 +19,10 @@ public struct Rectangle
                position.Y >= Position.Y &&
                position.Y <= Position.Y + Dimension.Height;
     }
+
+    public override string ToString()
+    {
+        return $"X: {Position.X}, Y: {Position.Y}, " +
+               $"W: {Dimension.Width}, H: {Dimension.Height}";
+    }
 }

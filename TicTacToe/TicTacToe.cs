@@ -1,6 +1,4 @@
-﻿using TicTacToe.Model;
-using TicTacToe.Model.Board;
-using TicTacToe.Model.Event;
+﻿using TicTacToe.Model.Board;
 using TicTacToe.View;
 
 namespace TicTacToe;

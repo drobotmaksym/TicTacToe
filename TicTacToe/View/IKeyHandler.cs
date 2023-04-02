@@ -4,5 +4,5 @@ namespace TicTacToe.View;
 
 public interface IKeyHandler<in T>
 {
-    void HandleKeyPress(T source, KeyPressEvent keyPressEvent);
+    void OnKeyPress(T model, KeyPressEvent keyPressEvent);
 }
