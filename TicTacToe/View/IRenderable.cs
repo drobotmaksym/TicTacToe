@@ -2,7 +2,7 @@
 
 public interface IRenderable
 {
-    void Render();
+    public IEnumerable<string> Represent();
 
-    void RenderAndDelegateToChildren();
+    public void Render();
 }

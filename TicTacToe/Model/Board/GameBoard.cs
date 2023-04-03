@@ -1,6 +1,6 @@
 ﻿namespace TicTacToe.Model.Board;
 
-public class Board
+public class GameBoard
 {
     private readonly Box[] _boxes;
     
@@ -8,7 +8,7 @@ public class Board
     
     public int Area => Size * Size;
 
-    public Board(int size)
+    public GameBoard(int size)
     {
         Size = size;
         _boxes = GenerateBoxes();
@@ -30,5 +30,15 @@ public class Board
         return _boxes[index];
     }
 
+    public bool IsFilled()
+    {
+        foreach (Box box in _boxes)
+        {
+            if (box.Piece == Box.Empty) return false;
+        }
+
+        return true;
+    }
+    
     public Box this[int column, int row] => _boxes[column + row * Size];
 }

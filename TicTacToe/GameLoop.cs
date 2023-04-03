@@ -1,32 +1,35 @@
-﻿using TicTacToe.Controller;
+﻿
+
+using TicTacToe.Controller;
+using TicTacToe.View;
 
 namespace TicTacToe;
 
 public class GameLoop
 {
-    private readonly InputHandler _inputHandler;
-    private readonly GameRenderer _gameRenderer;
+    private Component _rootComponent;
     private bool _running;
 
-    public GameLoop(InputHandler inputHandler, GameRenderer gameRenderer)
+    public GameLoop(Component rootComponent)
     {
-        _inputHandler = inputHandler;
-        _gameRenderer = gameRenderer;
+        _rootComponent = rootComponent;
     }
-    
+        
     internal void Start()
     {
         _running = true;
-        _gameRenderer.Init();
         EnterLoop();
     }
 
     private void EnterLoop()
     {
+        _rootComponent.Render(); // Pre-render
+        
         while (_running)
         {
-            _gameRenderer.Render();
-            _inputHandler.ReceiveAndHandleInput();
+            var pressEvent = InputReceiver.ReceiveInput();
+            _rootComponent.Press(pressEvent);
+            _rootComponent.Render();
         }
     }
     

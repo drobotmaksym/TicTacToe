@@ -1,6 +1,4 @@
 ﻿using TicTacToe.Model.Board;
-using TicTacToe.Model.Dash;
-using TicTacToe.Model.Evaluation;
 using TicTacToe.View;
 
 namespace TicTacToe;
@@ -9,13 +7,15 @@ public sealed class TicTacToe
 {
     internal static GameLoop GameLoop;
 
-    static TicTacToe()
-    {
-        GameLoop = new GameLoop(null, null);
-    }
-    
     public static void Main(string[] args)
     {
-
+        GameBoard board = new(3);
+        
+        BoardComponent boardComponent = new(board);
+        Component rootComponent = new RootComponent();
+        rootComponent.AddChild(boardComponent);
+        
+        GameLoop = new GameLoop(rootComponent);
+        GameLoop.Start();
     }
 }

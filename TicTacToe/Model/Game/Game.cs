@@ -3,7 +3,7 @@
 public class Game
 {
     private readonly Player[] _players;
-    
+
     public Statistics Statistics { get; }
     
     public Player CurrentPlayer { get; private set; }

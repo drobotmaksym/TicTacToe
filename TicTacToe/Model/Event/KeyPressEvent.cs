@@ -1,6 +1,6 @@
 ﻿namespace TicTacToe.Model.Event;
 
-public class KeyPressEvent : Event
+public class KeyPressEvent
 {
     public ConsoleKeyInfo KeyInfo { get; }
     

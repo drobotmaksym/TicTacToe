@@ -1,6 +1,6 @@
 ﻿namespace TicTacToe.Model.Dash;
 
-public enum Orientation
+public enum DashOrientation
 {
     Horizontal,
     Vertical,

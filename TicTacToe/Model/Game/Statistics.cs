@@ -6,6 +6,8 @@ public class Statistics
     
     public int Ties { get; private set; }
 
+    public Dictionary<Player, int>.KeyCollection Players => _playerStatistics.Keys;
+
     public Statistics(IEnumerable<Player> players)
     {
         foreach (Player player in players)

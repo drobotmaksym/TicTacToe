@@ -1,117 +1,134 @@
-﻿using System.Net;
-using System.Runtime.CompilerServices;
-using TicTacToe.Model.Board;
+﻿using TicTacToe.Model.Board;
 using TicTacToe.Model.Dash;
 using TicTacToe.Model.Game;
 
 namespace TicTacToe.Model.Evaluation;
 
-// Violates SRP, but I could not find a better solution.
 public class BoardEvaluator
 {
-    public static Evaluation EvaluateAndGenerateDash(Board.Board board)
+    public static event Action<BoardDash>? DashGenerated;
+
+    private static void NotifyDashGenerationListeners(BoardDash dash)
     {
-        Dash.Dash? rowEvaluation = EvaluateRows(board);
-        Dash.Dash? columnEvaluation = EvaluateColumns(board);
-        Dash.Dash? primaryDiagonalEvaluation = EvaluatePrimaryDiagonal(board);
-        Dash.Dash? secondaryDiagonalEvaluation = EvaluateSecondaryDiagonal(board);
-        
-        if (rowEvaluation != null) 
-            return new Evaluation(GameState.Win, rowEvaluation);
-        
-        if (columnEvaluation != null) 
-            return new Evaluation(GameState.Win, columnEvaluation);
-        
-        if (primaryDiagonalEvaluation != null) 
-            return new Evaluation(GameState.Win, primaryDiagonalEvaluation);
-        
-        if (secondaryDiagonalEvaluation != null) 
-            return new Evaluation(GameState.Win, secondaryDiagonalEvaluation);
-        
-        return new Evaluation(GameState.Intermediate);
-    }
-
-    private static Dash.Dash? EvaluateRows(Board.Board board)
-    {
-        for (int j = 0; j < board.Size; j++)
-        {
-            var positions = new Position[board.Size];
-            char lastPiece = board[0, j].Piece;
-            int matches = 0;
-
-            for (int i = 0; i < board.Size; i++)
-            {
-                char currentPiece = board[i, j].Piece;
-                if (currentPiece != lastPiece || currentPiece == Box.Empty) break;
-                positions[matches] = new Position(i, j);
-                lastPiece = currentPiece;
-                matches++;
-            }
-
-            if (matches == board.Size) return new Dash.Dash(Orientation.Horizontal, positions);
-        }
-        
-        return null;
+        DashGenerated?.Invoke(dash);
     }
     
-    private static Dash.Dash? EvaluateColumns(Board.Board board)
+    public static GameState EvaluateAndGenerateDash(GameBoard board)
+    {
+        if (IsRowMatch(board) ||
+            IsColumnMatch(board) ||
+            IsPrimaryDiagonalMatch(board) ||
+            IsSecondaryDiagonalMatch(board)) return GameState.Win;
+
+        return board.IsFilled() ? GameState.Tie : GameState.Intermediate;
+    }
+
+    private static bool IsRowMatch(GameBoard board)
+    {
+        return IsStraightLineMatch(
+            board,
+            getFirstPiece: index => board[0, index].Piece,
+            forRows: true
+        );
+    }
+    
+    private static bool IsColumnMatch(GameBoard board)
+    {
+        return IsStraightLineMatch(
+            board,
+            getFirstPiece: index => board[index, 0].Piece,
+            forRows: false
+            );
+    }
+
+    private static bool IsStraightLineMatch(
+        GameBoard board,
+        GetFirstPiece getFirstPiece,
+        bool forRows
+        )
     {
         for (int i = 0; i < board.Size; i++)
         {
-            var positions = new Position[board.Size];
-            char lastPiece = board[i, 0].Piece;
-            int matches = 0;
-
+            char firstPiece = getFirstPiece(i);  
+            int matches = 0; 
+ 
             for (int j = 0; j < board.Size; j++)
             {
-                char currentPiece = board[i, j].Piece;
-                if (currentPiece != lastPiece || currentPiece == Box.Empty) break;
-                positions[matches] = new Position(i, j);
-                lastPiece = currentPiece;
+                char currentPiece = board[
+                    forRows ? j : i,
+                    forRows ? i : j
+                ].Piece;
+                
+                if (currentPiece != firstPiece || currentPiece == Box.Empty) break;
                 matches++;
             }
 
-            if (matches == board.Size) return new Dash.Dash(Orientation.Vertical, positions);
+            if (matches == board.Size)
+            {
+                var orientation = forRows ? DashOrientation.Horizontal : DashOrientation.Vertical;
+                NotifyDashGenerationListeners(new BoardDash(orientation, i));
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static bool IsPrimaryDiagonalMatch(GameBoard board)
+    {
+        bool match = IsDiagonalMatch(
+            board,
+            firstPiece: board[0, 0].Piece,
+            getCurrentPiece: (index) => board[index, index].Piece
+        );
+
+        if (match)
+        {
+            NotifyDashGenerationListeners(
+                new BoardDash(DashOrientation.PrimaryDiagonal)
+                );
         }
         
-        return null;
+        return match;
     }
+
+    private static bool IsSecondaryDiagonalMatch(GameBoard board)
+    {
+        bool match = IsDiagonalMatch(
+            board,
+            firstPiece: board[board.Size - 1, 0].Piece,
+            getCurrentPiece: (index) => board[board.Size - index - 1, index].Piece
+        );
+        
+        if (match)
+        {
+            NotifyDashGenerationListeners(
+                new BoardDash(DashOrientation.SecondaryDiagonal)
+            );
+        }
+        
+        return match;
+    }
+
+    private static bool IsDiagonalMatch(
+        GameBoard board,
+        char firstPiece,
+        GetCurrentPiece getCurrentPiece
+        )
+    {
+        int matches = 0;
+        
+        for (int i = 0; i < board.Size; i++)
+        {
+            char currentPiece = getCurrentPiece(i);
+            if (currentPiece != firstPiece || currentPiece == Box.Empty) break;
+            matches++;
+        }
+        
+        return matches == board.Size;
+    }
+
+    private delegate char GetFirstPiece(int index);
     
-    private static Dash.Dash? EvaluatePrimaryDiagonal(Board.Board board)
-    {
-        var positions = new Position[board.Size];
-        char lastPiece = board[0, 0].Piece;
-        int matches = 0;
-        
-        for (int i = 0; i < board.Size; i++)
-        {
-            char currentPiece = board[i, i].Piece;
-            if (currentPiece != lastPiece || currentPiece == Box.Empty) break;
-            
-            positions[matches] = new Position(i, i);
-            lastPiece = currentPiece;
-            matches++;
-        }
-
-        return matches == board.Size ? new Dash.Dash(Orientation.PrimaryDiagonal, positions) : null;
-    }
-
-    private static Dash.Dash? EvaluateSecondaryDiagonal(Board.Board board)
-    {
-        var positions = new Position[board.Size];
-        char lastPiece = board[board.Size - 1, 0].Piece;
-        int matches = 0;
-        
-        for (int i = 0; i < board.Size; i++)
-        {
-            char currentPiece = board[board.Size - i - 1, i].Piece;
-            if (currentPiece != lastPiece || currentPiece == Box.Empty) break;
-            
-            positions[matches] = new Position(board.Size - i - 1, i);
-            lastPiece = currentPiece;
-            matches++;
-        }
-
-        return matches == board.Size ? new Dash.Dash(Orientation.SecondaryDiagonal, positions) : null;
-    }
+    private delegate char GetCurrentPiece(int index);
 }
