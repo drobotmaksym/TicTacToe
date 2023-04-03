@@ -13,7 +13,7 @@ public class SettingsComponent : Container
         char firstPlayerPiece = PromptPiece("Enter first player piece (X, for instance): ");
         string secondPlayerName = PromptName("Enter second player name: ", "Player Two");
         char secondPlayerPiece = PromptPiece("Enter second player piece (O, for instance): ");
-        int boardSize = PromptBoardSize("Enter board size: ", 3);
+        int boardSize = PromptBoardSize("Enter board size: ", 3, 8);
 
         Console.Clear();
         
@@ -31,22 +31,25 @@ public class SettingsComponent : Container
     private static string PromptName(string text, string defaultName)
     {
         Console.Write(text);
-        return Console.ReadLine() ?? defaultName;
+        string name = Console.ReadLine() ?? defaultName;
+        return name.Trim().Length == 0 ? defaultName : name;
     }
 
     private static char PromptPiece(string text)
     {
         Console.Write(text);
         char piece = Console.ReadKey().KeyChar;
+        if (piece.ToString().Trim().Length == 0) piece = '?';
         Console.WriteLine();
         return piece;
     }
 
-    private static int PromptBoardSize(string text, int defaultSize)
+    private static int PromptBoardSize(string text, int defaultSize, int maxSize)
     {
         Console.Write(text);
         int.TryParse(Console.ReadLine(), out int boardSize);
         if (boardSize < defaultSize) boardSize = defaultSize;
+        if (boardSize > maxSize) boardSize = maxSize;
         return boardSize;
     }
 }
