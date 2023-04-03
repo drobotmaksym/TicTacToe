@@ -9,6 +9,8 @@ public abstract class Component : IRenderable
     public Rectangle Rectangle;
     public IEnumerable<Component> Children => _children;
     public event Action<KeyPressEvent>? Pressed;
+    public ConsoleColor BackgroundColor { get; set; } = RootComponent.DefaultBackgroundColor;
+    public ConsoleColor ForegroundColor { get; set; } = RootComponent.DefaultForegroundColor;
 
     private Component? GetChildDelegateIfAny(Position position)
     {
@@ -53,6 +55,10 @@ public abstract class Component : IRenderable
     public void Render()
     {
         IEnumerable<string> representation = Represent();
+        
+        Console.BackgroundColor = BackgroundColor;
+        Console.ForegroundColor = ForegroundColor;
+        
         foreach (string line in representation)
         {
             Console.WriteLine(line);

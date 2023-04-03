@@ -35,7 +35,7 @@ public sealed class TicTacToe
     
     public static void Main(string[] args)
     {
-        Console.Title = "Tic-Tac-Toe";
+        Console.Title = "Tic-Tac-Toe | WASD to navigate | Enter to place a piece | Escape for settings";
         Console.InputEncoding = Encoding.UTF8;
         Console.OutputEncoding = Encoding.UTF8;
 

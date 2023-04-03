@@ -15,6 +15,16 @@ public class BoxComponent : Component
 
     public override IEnumerable<string> Represent()
     {
+        switch (Box.Piece)
+        {
+            case Box.Empty:
+                ForegroundColor = ConsoleColor.DarkGray;
+                break;
+            default:
+                ForegroundColor = ConsoleColor.Cyan;
+                break;
+        }
+        
         return new[] { Box.Piece.ToString() };
     }
 }

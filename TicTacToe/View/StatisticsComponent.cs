@@ -9,6 +9,7 @@ public class StatisticsComponent : Component
     public StatisticsComponent(Statistics statistics)
     {
         _statistics = statistics;
+        ForegroundColor = ConsoleColor.Blue;
     }
 
     public override IEnumerable<string> Represent()

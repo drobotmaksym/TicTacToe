@@ -6,6 +6,8 @@ namespace TicTacToe.View;
 public class RootComponent : Container
 {
     public Game Game { get; }
+    public static ConsoleColor DefaultBackgroundColor = ConsoleColor.Black;
+    public static ConsoleColor DefaultForegroundColor = ConsoleColor.White;
     
     public RootComponent(Game game)
     {
