@@ -12,12 +12,12 @@ public struct Position
         Y = y;
     }
 
-    public static Position operator + (Position a, Position b)
+    public static Position operator +(Position a, Position b)
     {
         return new Position(a.X + b.X, a.Y + b.Y);
     }
-    
-    public static Position operator - (Position a, Position b)
+
+    public static Position operator -(Position a, Position b)
     {
         return new Position(a.X - b.X, a.Y - b.Y);
     }

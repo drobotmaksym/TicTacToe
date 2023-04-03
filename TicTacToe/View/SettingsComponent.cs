@@ -16,15 +16,15 @@ public class SettingsComponent : Container
         int boardSize = PromptBoardSize("Enter board size: ", 3, 8);
 
         Console.Clear();
-        
-        Player[] players = new[]
+
+        Player[] players =
         {
             new Player(firstPlayerName, firstPlayerPiece),
             new Player(secondPlayerName, secondPlayerPiece)
         };
-        
+
         TicTacToe.Game = new Game(players, players[0], new GameBoard(boardSize));
-        
+
         return base.Represent();
     }
 

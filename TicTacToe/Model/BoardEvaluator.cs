@@ -12,7 +12,7 @@ public static class BoardEvaluator
     {
         DashGenerated?.Invoke(dash);
     }
-    
+
     public static GameState EvaluateAndGenerateDash(GameBoard board)
     {
         if (IsRowMatch(board) ||
@@ -27,9 +27,9 @@ public static class BoardEvaluator
     {
         for (int i = 0; i < board.Size; i++)
         {
-            char firstPiece = board[0, i].Piece;  
-            int matches = 0; 
- 
+            char firstPiece = board[0, i].Piece;
+            int matches = 0;
+
             for (int j = 0; j < board.Size; j++)
             {
                 char currentPiece = board[j, i].Piece;
@@ -46,20 +46,20 @@ public static class BoardEvaluator
 
         return false;
     }
-    
+
     private static bool IsColumnMatch(GameBoard board)
     {
         for (int i = 0; i < board.Size; i++)
         {
-            char firstPiece = board[i, 0].Piece;  
-            int matches = 0; 
- 
+            char firstPiece = board[i, 0].Piece;
+            int matches = 0;
+
             for (int j = 0; j < board.Size; j++)
             {
                 char currentPiece = board[i, j].Piece;
                 if (currentPiece != firstPiece || currentPiece == Box.Empty) break;
                 matches++;
-                
+
                 if (matches == board.Size)
                 {
                     NotifyDashGenerationListeners(new BoardDash(DashOrientation.Vertical, i));
@@ -75,7 +75,7 @@ public static class BoardEvaluator
     {
         char firstPiece = board[0, 0].Piece;
         int matches = 0;
-        
+
         for (int i = 0; i < board.Size; i++)
         {
             char currentPiece = board[i, i].Piece;
@@ -85,12 +85,10 @@ public static class BoardEvaluator
 
         bool match = matches == board.Size;
         if (match)
-        {
             NotifyDashGenerationListeners(
                 new BoardDash(DashOrientation.PrimaryDiagonal)
             );
-        }
-        
+
         return match;
     }
 
@@ -98,7 +96,7 @@ public static class BoardEvaluator
     {
         char firstPiece = board[board.Size - 1, 0].Piece;
         int matches = 0;
-        
+
         for (int i = 0; i < board.Size; i++)
         {
             char currentPiece = board[board.Size - i - 1, i].Piece;
@@ -108,12 +106,10 @@ public static class BoardEvaluator
 
         bool match = matches == board.Size;
         if (match)
-        {
             NotifyDashGenerationListeners(
                 new BoardDash(DashOrientation.SecondaryDiagonal)
             );
-        }
-        
+
         return match;
     }
 }

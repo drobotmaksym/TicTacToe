@@ -5,13 +5,13 @@ namespace TicTacToe.View;
 
 public class BoxComponent : Component
 {
-    public Box Box { get; }
-
     public BoxComponent(Box box)
     {
         Rectangle.Dimension = new Dimension(1, 1);
         Box = box;
     }
+
+    public Box Box { get; }
 
     public override IEnumerable<string> Represent()
     {
@@ -24,7 +24,7 @@ public class BoxComponent : Component
                 ForegroundColor = ConsoleColor.Cyan;
                 break;
         }
-        
+
         return new[] { Box.Piece.ToString() };
     }
 }

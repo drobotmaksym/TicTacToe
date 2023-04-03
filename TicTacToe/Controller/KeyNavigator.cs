@@ -19,17 +19,17 @@ public class KeyNavigator
                 if (cursorPosition.X != component.Rectangle.Position.X) cursorPosition.X--;
                 break;
             case ConsoleKey.S:
-                if (cursorPosition.Y != 
-                    component.Rectangle.Position.Y + 
+                if (cursorPosition.Y !=
+                    component.Rectangle.Position.Y +
                     component.Rectangle.Dimension.Height - 1) cursorPosition.Y++;
                 break;
             case ConsoleKey.D:
-                if (cursorPosition.X != 
-                    component.Rectangle.Position.X + 
+                if (cursorPosition.X !=
+                    component.Rectangle.Position.X +
                     component.Rectangle.Dimension.Width - 1) cursorPosition.X++;
                 break;
         }
-        
+
         Console.SetCursorPosition(cursorPosition.X, cursorPosition.Y);
     }
 }

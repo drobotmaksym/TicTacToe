@@ -6,7 +6,7 @@ namespace TicTacToe.Controller;
 
 public class GameLogic
 {
-    private Game _game;
+    private readonly Game _game;
 
     public GameLogic(Game game)
     {
@@ -29,7 +29,7 @@ public class GameLogic
     {
         box.Piece = _game.CurrentPlayer.Piece;
     }
-    
+
     private void SwitchGameState(GameState gameState)
     {
         switch (gameState)
@@ -46,7 +46,7 @@ public class GameLogic
                 _game.SwitchPlayer();
                 break;
         }
-        
+
         _game.GameState = gameState;
     }
 }

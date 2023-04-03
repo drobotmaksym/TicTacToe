@@ -9,19 +9,19 @@ public sealed class TicTacToe
 {
     internal static GameLoop GameLoop;
     public static Game Game = null!;
-    private static Component _root;
-    private static GameLogic _gameLogic;
-    
+    private static readonly Component _root;
+    private static readonly GameLogic _gameLogic;
+
     static TicTacToe()
     {
         new SettingsComponent().Represent(); // Creates a game
-        
+
         _root = new RootComponent(Game);
         _gameLogic = new GameLogic(Game);
-        
+
         GameLoop = new GameLoop(_root, Game);
     }
-    
+
     public static void Main(string[] args)
     {
         Console.Title = "Tic-Tac-Toe | WASD to navigate | Enter to place a piece";

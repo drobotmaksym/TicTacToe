@@ -6,18 +6,6 @@ public class Game
 {
     private readonly Player[] _players;
 
-    public GameBoard GameBoard { get; }
-
-    public Statistics Statistics { get; }
-    
-    public Player CurrentPlayer { get; private set; }
-    
-    public GameState GameState { get; set; }
-
-    public bool Running { get; private set; }
-
-    public static event Action? GameRestarted;
-    
     public Game(Player[] players, Player startingPlayer, GameBoard gameBoard)
     {
         _players = players;
@@ -25,13 +13,25 @@ public class Game
         Statistics = new Statistics(players);
         CurrentPlayer = startingPlayer;
     }
-    
+
+    public GameBoard GameBoard { get; }
+
+    public Statistics Statistics { get; }
+
+    public Player CurrentPlayer { get; private set; }
+
+    public GameState GameState { get; set; }
+
+    public bool Running { get; private set; }
+
+    public static event Action? GameRestarted;
+
     public void Start()
     {
         GameState = GameState.Intermediate;
         Running = true;
     }
-    
+
     public void Stop()
     {
         Running = false;
@@ -48,15 +48,11 @@ public class Game
     public void SwitchPlayer()
     {
         int currentPlayerIndex = GetCurrentPlayerIndex();
-        
+
         if (currentPlayerIndex + 1 == _players.Length)
-        {
             currentPlayerIndex = 0;
-        }
         else
-        {
             currentPlayerIndex++;
-        }
 
         CurrentPlayer = _players[currentPlayerIndex];
     }
@@ -64,9 +60,8 @@ public class Game
     private int GetCurrentPlayerIndex()
     {
         for (int i = 0; i < _players.Length; i++)
-        {
-            if (_players[i] == CurrentPlayer) return i;
-        }
+            if (_players[i] == CurrentPlayer)
+                return i;
 
         throw new KeyNotFoundException();
     }

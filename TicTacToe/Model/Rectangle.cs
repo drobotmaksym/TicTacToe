@@ -3,7 +3,7 @@
 public struct Rectangle
 {
     public Position Position { get; set; }
-    
+
     public Dimension Dimension { get; set; }
 
     public Rectangle(Position position, Dimension dimension)
