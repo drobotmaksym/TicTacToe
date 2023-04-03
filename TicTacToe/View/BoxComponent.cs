@@ -1,20 +1,20 @@
-﻿using TicTacToe.Model.Board;
+﻿using TicTacToe.Model;
+using TicTacToe.Model.Board;
 
 namespace TicTacToe.View;
 
 public class BoxComponent : Component
 {
-    private Box _box;
+    public Box Box { get; }
 
     public BoxComponent(Box box)
     {
-        _box = box;
-        Dimension.Width = 1;
-        Dimension.Height = 1;
+        Rectangle.Dimension = new Dimension(1, 1);
+        Box = box;
     }
 
     public override IEnumerable<string> Represent()
     {
-        return new[] { _box.Piece.ToString() };
+        return new[] { Box.Piece.ToString() };
     }
 }

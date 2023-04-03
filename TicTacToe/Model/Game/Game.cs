@@ -1,8 +1,12 @@
-﻿namespace TicTacToe.Model.Game;
+﻿using TicTacToe.Model.Board;
+
+namespace TicTacToe.Model.Game;
 
 public class Game
 {
     private readonly Player[] _players;
+
+    public GameBoard GameBoard { get; }
 
     public Statistics Statistics { get; }
     
@@ -10,9 +14,12 @@ public class Game
     
     public GameState GameState { get; set; }
 
-    public Game(Player[] players, Player startingPlayer)
+    public bool Running { get; private set; }
+    
+    public Game(Player[] players, Player startingPlayer, GameBoard gameBoard)
     {
         _players = players;
+        GameBoard = gameBoard;
         Statistics = new Statistics(players);
         CurrentPlayer = startingPlayer;
     }
@@ -20,11 +27,19 @@ public class Game
     public void Start()
     {
         GameState = GameState.Intermediate;
+        Running = true;
     }
     
     public void Stop()
     {
-        GameState = GameState.Stopped;
+        Running = false;
+    }
+
+    public void Restart()
+    {
+        Stop();
+        GameBoard.Clear();
+        Start();
     }
 
     public void SwitchPlayer()

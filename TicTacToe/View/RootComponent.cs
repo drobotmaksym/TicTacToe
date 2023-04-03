@@ -1,9 +1,19 @@
-﻿namespace TicTacToe.View;
+﻿using TicTacToe.Model;
+using TicTacToe.Model.Game;
 
-public class RootComponent : Component
+namespace TicTacToe.View;
+
+public class RootComponent : Container
 {
-    public override IEnumerable<string> Represent()
+    public Game Game { get; }
+    
+    public RootComponent(Game game)
     {
-        return EmptyContainer;
+        AddChild(new StatisticsComponent(game.Statistics));
+        AddChild(new BoardComponent(game.GameBoard));
+
+        Rectangle.Dimension = new Dimension(25, 25);
+            
+        Game = game;
     }
 }

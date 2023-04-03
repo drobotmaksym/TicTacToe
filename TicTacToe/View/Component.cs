@@ -6,10 +6,7 @@ namespace TicTacToe.View;
 public abstract class Component : IRenderable
 {
     private List<Component> _children = new();
-    public readonly static string[] EmptyContainer = new string[] { "" };
-    public Position Position;
-    public Dimension Dimension;
-    public Rectangle Rectangle => new Rectangle(Position, Dimension);
+    public Rectangle Rectangle;
     public IEnumerable<Component> Children => _children;
     public event Action<KeyPressEvent>? Pressed;
 
@@ -18,8 +15,8 @@ public abstract class Component : IRenderable
         foreach (Component child in _children)
         {
             Rectangle absoluteChildRectangle = new Rectangle(
-                Position + child.Position,
-                child.Dimension
+                Rectangle.Position + child.Rectangle.Position,
+                child.Rectangle.Dimension
                 ); 
             
             if (absoluteChildRectangle.Contains(position)) return child;
@@ -50,9 +47,9 @@ public abstract class Component : IRenderable
     {
         _children.Remove(child);
     }
-    
+
     public abstract IEnumerable<string> Represent();
-    
+
     public void Render()
     {
         IEnumerable<string> representation = Represent();
@@ -63,12 +60,37 @@ public abstract class Component : IRenderable
 
         foreach (Component child in _children)
         {
+            Position absoluteChildPosition = Rectangle.Position + child.Rectangle.Position;
+            
             Console.SetCursorPosition(
-                Position.X + child.Position.X,
-                Position.Y + child.Position.Y
+                absoluteChildPosition.X,
+                absoluteChildPosition.Y
             );
             
             child.Render();
         }
+    }
+    
+    public IEnumerable<T> GetChildComponentsOfType<T>() where T : Component
+    {
+        List<T> components = new();
+
+        foreach (Component child in _children)
+        {
+            if (child.GetType() == typeof(T)) components.Add((T) child);
+            components.AddRange(child.GetChildComponentsOfType<T>());
+        }
+        
+        return components;
+    }
+
+    public T? GetDirectChildOfType<T>() where T : Component
+    {
+        foreach (Component child in _children)
+        {
+            if (child.GetType() == typeof(T)) return (T) child;
+        }
+
+        return null;
     }
 }

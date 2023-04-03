@@ -1,16 +1,16 @@
-﻿using TicTacToe.Controller;
-using TicTacToe.Model;
+﻿using TicTacToe.Model;
 using TicTacToe.Model.Board;
 
 namespace TicTacToe.View;
 
-public class BoardComponent : Component
+public class BoardComponent : Container
 {
     public GameBoard Board { get; }
 
     public BoardComponent(GameBoard board)
     {
         Board = board;
+        Rectangle.Dimension = new Dimension(board.Size, board.Size);
         AddBoxes();
     }
 
@@ -21,15 +21,9 @@ public class BoardComponent : Component
             for (int j = 0; j < Board.Size; j++)
             {
                 BoxComponent boxComponent = new BoxComponent(Board[j, i]);
-                boxComponent.Position = new Position(j, i);
-                boxComponent.Pressed += (pressEvent) => KeyNavigator.Navigate(pressEvent, this);
+                boxComponent.Rectangle.Position = new Position(j, i);
                 AddChild(boxComponent);
             }
         }
-    }
-
-    public override IEnumerable<string> Represent()
-    {
-        return EmptyContainer;
     }
 }

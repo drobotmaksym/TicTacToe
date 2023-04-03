@@ -15,9 +15,9 @@ public struct Rectangle
     public bool Contains(Position position)
     {
         return position.X >= Position.X &&
-               position.X <= Position.X + Dimension.Width &&
+               position.X <= Position.X + Dimension.Width - 1 &&
                position.Y >= Position.Y &&
-               position.Y <= Position.Y + Dimension.Height;
+               position.Y <= Position.Y + Dimension.Height - 1;
     }
 
     public override string ToString()

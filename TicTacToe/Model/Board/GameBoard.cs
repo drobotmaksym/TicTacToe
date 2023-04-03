@@ -30,6 +30,14 @@ public class GameBoard
         return _boxes[index];
     }
 
+    public void Clear()
+    {
+        foreach (Box box in _boxes)
+        {
+            box.Piece = Box.Empty;
+        }
+    }
+    
     public bool IsFilled()
     {
         foreach (Box box in _boxes)
