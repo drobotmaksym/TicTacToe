@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using TicTacToe.Controller;
-using TicTacToe.Model.Board;
 using TicTacToe.Model.Game;
 using TicTacToe.View;
 
@@ -9,39 +8,28 @@ namespace TicTacToe;
 public sealed class TicTacToe
 {
     internal static GameLoop GameLoop;
-    private static Game _game;
+    public static Game Game = null!;
     private static Component _root;
     private static GameLogic _gameLogic;
     
-    private static Game CreateGame()
-    {
-        Player maksym = new Player("Maksym", 'X');
-        Player natasa = new Player("Natasa", 'O');
-        Player[] players = new[] { maksym, natasa };
-        
-        GameBoard board = new(3);
-        
-        return new Game(players, maksym, board);
-    }
-
     static TicTacToe()
     {
-        _game = CreateGame();
-        _root = new RootComponent(_game);
-        _gameLogic = new GameLogic(_game);
+        new SettingsComponent().Represent(); // Creates a game
         
-        GameLoop = new GameLoop(_root, _game);
+        _root = new RootComponent(Game);
+        _gameLogic = new GameLogic(Game);
+        
+        GameLoop = new GameLoop(_root, Game);
     }
     
     public static void Main(string[] args)
     {
-        Console.Title = "Tic-Tac-Toe | WASD to navigate | Enter to place a piece | Escape for settings";
+        Console.Title = "Tic-Tac-Toe | WASD to navigate | Enter to place a piece";
         Console.InputEncoding = Encoding.UTF8;
         Console.OutputEncoding = Encoding.UTF8;
 
-        PressHandlerSubscriber pressHandlerSubscriber = new(_gameLogic, _root);
-        pressHandlerSubscriber.SubscribePressHandlers();
-        
+        new PressHandlerSubscriber(_gameLogic, _root).SubscribePressHandlers();
+
         GameLoop.Start();
     }
 }
