@@ -26,6 +26,7 @@ public class GameLoop
         
         _running = true;
         _game.Start();
+        _rootComponent.OnEnable();
         EnterLoop();
     }
 
@@ -58,6 +59,7 @@ public class GameLoop
     internal void Stop()
     {
         _game.Stop();
+        _rootComponent.OnDisable();
         _running = false;
     }
 }

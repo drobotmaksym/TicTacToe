@@ -70,7 +70,17 @@ public abstract class Component : IRenderable
             child.Render();
         }
     }
-    
+
+    public virtual void OnEnable()
+    {
+        foreach (Component child in _children) child.OnEnable();
+    }
+
+    public virtual void OnDisable()
+    {
+        foreach (Component child in _children) child.OnDisable();
+    }
+
     public IEnumerable<T> GetChildComponentsOfType<T>() where T : Component
     {
         List<T> components = new();
@@ -92,5 +102,13 @@ public abstract class Component : IRenderable
         }
 
         return null;
+    }
+
+    public void Focus()
+    {
+        Console.SetCursorPosition(
+            Rectangle.Position.X,
+            Rectangle.Position.Y
+            );
     }
 }

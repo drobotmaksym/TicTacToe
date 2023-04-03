@@ -15,6 +15,8 @@ public class Game
     public GameState GameState { get; set; }
 
     public bool Running { get; private set; }
+
+    public static event Action? GameRestarted;
     
     public Game(Player[] players, Player startingPlayer, GameBoard gameBoard)
     {
@@ -39,6 +41,7 @@ public class Game
     {
         Stop();
         GameBoard.Clear();
+        GameRestarted?.Invoke();
         Start();
     }
 

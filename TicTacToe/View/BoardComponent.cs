@@ -10,7 +10,12 @@ public class BoardComponent : Container
     public BoardComponent(GameBoard board)
     {
         Board = board;
-        Rectangle.Dimension = new Dimension(board.Size, board.Size);
+        Rectangle = new Rectangle(
+            new Position(2, 4),
+            new Dimension(board.Size, board.Size)
+            );
+
+        AddChild(new DashComponent(Board));
         AddBoxes();
     }
 
@@ -25,5 +30,11 @@ public class BoardComponent : Container
                 AddChild(boxComponent);
             }
         }
+    }
+
+    public override void OnEnable()
+    {
+        Focus();
+        base.OnEnable();
     }
 }

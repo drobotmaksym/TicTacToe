@@ -2,7 +2,7 @@
 using TicTacToe.Model.Dash;
 using TicTacToe.Model.Game;
 
-namespace TicTacToe.Model.Evaluation;
+namespace TicTacToe.Model;
 
 public static class BoardEvaluator
 {
@@ -56,13 +56,13 @@ public static class BoardEvaluator
  
             for (int j = 0; j < board.Size; j++)
             {
-                char currentPiece = board[j, i].Piece;
+                char currentPiece = board[i, j].Piece;
                 if (currentPiece != firstPiece || currentPiece == Box.Empty) break;
                 matches++;
                 
                 if (matches == board.Size)
                 {
-                    NotifyDashGenerationListeners(new BoardDash(DashOrientation.Vertical, j));
+                    NotifyDashGenerationListeners(new BoardDash(DashOrientation.Vertical, i));
                     return true;
                 }
             }

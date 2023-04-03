@@ -1,5 +1,5 @@
-﻿using TicTacToe.Model.Board;
-using TicTacToe.Model.Evaluation;
+﻿using TicTacToe.Model;
+using TicTacToe.Model.Board;
 using TicTacToe.Model.Game;
 
 namespace TicTacToe.Controller;
