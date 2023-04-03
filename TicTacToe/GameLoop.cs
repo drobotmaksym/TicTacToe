@@ -1,6 +1,5 @@
-﻿
-
-using TicTacToe.Controller;
+﻿using TicTacToe.Controller;
+using TicTacToe.Model.Event;
 using TicTacToe.View;
 
 namespace TicTacToe;
@@ -23,14 +22,28 @@ public class GameLoop
 
     private void EnterLoop()
     {
-        _rootComponent.Render(); // Pre-render
+        Render(); // Pre-render
         
         while (_running)
         {
-            var pressEvent = InputReceiver.ReceiveInput();
-            _rootComponent.Press(pressEvent);
-            _rootComponent.Render();
+            HandleInput(InputReceiver.ReceiveInput());
+            Render();
         }
+    }
+
+    private void HandleInput(KeyPressEvent keyPressEvent)
+    {
+        _rootComponent.Press(keyPressEvent);
+    }
+    
+    private void Render()
+    {
+        int cursorX = Console.CursorLeft;
+        int cursorY = Console.CursorTop;
+
+        _rootComponent.Render();
+        
+        Console.SetCursorPosition(cursorX, cursorY);
     }
     
     internal void Stop()

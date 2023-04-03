@@ -7,8 +7,8 @@ public abstract class Component : IRenderable
 {
     private List<Component> _children = new();
     public readonly static string[] EmptyContainer = new string[] { "" };
-    public Position Position { get; set; }
-    public Dimension Dimension { get; set; }
+    public Position Position;
+    public Dimension Dimension;
     public Rectangle Rectangle => new Rectangle(Position, Dimension);
     public IEnumerable<Component> Children => _children;
     public event Action<KeyPressEvent>? Pressed;
@@ -17,7 +17,12 @@ public abstract class Component : IRenderable
     {
         foreach (Component child in _children)
         {
-            if (child.Rectangle.Contains(position)) return child;
+            Rectangle absoluteChildRectangle = new Rectangle(
+                Position + child.Position,
+                child.Dimension
+                ); 
+            
+            if (absoluteChildRectangle.Contains(position)) return child;
         }
 
         return null;

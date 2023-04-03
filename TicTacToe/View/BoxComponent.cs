@@ -9,6 +9,8 @@ public class BoxComponent : Component
     public BoxComponent(Box box)
     {
         _box = box;
+        Dimension.Width = 1;
+        Dimension.Height = 1;
     }
 
     public override IEnumerable<string> Represent()
